@@ -37,6 +37,6 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: payload
-        }).catch(err => console.error('Chyba při odesílání:', err));
+        }).catch(err => console.error('Error while sending:', err));
     }, 1000);
 })();

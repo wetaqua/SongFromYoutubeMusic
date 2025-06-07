@@ -12,13 +12,11 @@ META_FILE = 'now_playing_meta.json'
 @app.route('/update', methods=['POST'])
 def update_song():
     data = request.get_json()
-    print("Přijatá data:", data)
+    print("Recieved data:", data)
 
-    # Uložení názvu skladby
     with open(SONG_FILE, 'w', encoding='utf-8') as f:
         f.write(data.get('song', ''))
 
-    # Uložení aktuálního času a délky
     meta = {
         'current': data.get('current', 0),
         'duration': data.get('duration', 0)

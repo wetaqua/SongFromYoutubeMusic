@@ -40,8 +40,8 @@
 </head>
 <body>
   <div class="container">
-    <div class="title" id="song-title">Název skladby</div>
-    <div class="artist" id="song-artist">Interpret</div>
+    <div class="title" id="song-title">Song name</div>
+    <div class="artist" id="song-artist">Artist</div>
   </div>
 
   <script>
@@ -55,7 +55,7 @@
         document.getElementById('song-title').textContent = title || '';
         document.getElementById('song-artist').textContent = artist || '';
       } catch (err) {
-        console.error('Nepodařilo se načíst skladbu', err);
+        console.error('Error while loading:', err);
       }
     }
 

@@ -20,7 +20,7 @@
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({song})
-            }).catch(err => console.error('Chyba při odesílání:', err));
+            }).catch(err => console.error('Error while sending:', err));
         }
     }, 5000);
 })();

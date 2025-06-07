@@ -17,7 +17,7 @@
         }
 
         #container {
-            background: rgba(30, 30, 30, 0.5); /* 50% průhlednost */
+            background: rgba(30, 30, 30, 0.5);
             width: 600px;
             height: 150px;
             padding: 30px 40px;
@@ -40,7 +40,7 @@
         #scrolling-text {
             display: inline-block;
             white-space: nowrap;
-            color: #ffffff; /* čistě bílý text */
+            color: #ffffff;
             font-size: 1.8rem;
             animation: scroll-text 20s linear infinite;
         }
@@ -85,7 +85,7 @@
                     const progress = duration > 0 ? (current / duration) * 100 : 0;
                     document.getElementById('bar').style.width = `${progress}%`;
                 } catch (e) {
-                    console.error('Chyba při načítání:', e);
+                    console.error('Error while loading::', e);
                 }
         }
 

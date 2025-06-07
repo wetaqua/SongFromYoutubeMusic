@@ -10,7 +10,7 @@ NOW_PLAYING_FILE = 'now_playing.txt'
 @app.route('/update', methods=['POST'])
 def update_song():
     data = request.get_json()
-    print("Přijatá data:", data)
+    print("Recieved data:", data)
     with open(NOW_PLAYING_FILE, 'w', encoding='utf-8') as f:
         f.write(data.get('song', ''))
     return 'OK'
