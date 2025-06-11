@@ -1,0 +1,1 @@
+Version 2 of SongFromYoutube WithBar - writes song and duration into RAM not on disk into file

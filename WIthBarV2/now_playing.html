@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Now Playing</title>
+    <style>
+        html, body {
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #container {
+            background: rgba(30, 30, 30, 0.5);
+            width: 600px;
+            height: 150px;
+            padding: 30px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        #song {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #scrolling-text {
+            white-space: nowrap;
+            color: #ffffff;
+            font-size: 1.8rem;
+        }
+
+        .scrolling {
+            display: inline-block;
+            animation: scroll-text 20s linear infinite;
+        }
+
+        @keyframes scroll-text {
+            0%   { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        #progress {
+            width: 100%;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        #bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #007bff, #00bfff);
+            transition: width 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="song">
+            <div id="scrolling-text">Loading song...</div>
+        </div>
+        <div id="progress">
+            <div id="bar"></div>
+        </div>
+    </div>
+
+    <script>
+        async function loadNowPlaying() {
+            try {
+                const [songRes, metaRes] = await Promise.all([
+                    fetch('http://localhost:5000/now_playing.txt'),
+                    fetch('http://localhost:5000/now_playing_meta.json')
+                ]);
+
+                if (!songRes.ok || !metaRes.ok) {
+                    console.warn("Server nevrátil platnou odpověď.");
+                    return;
+                }
+
+                const songText = await songRes.text();
+                const meta = await metaRes.json();
+
+                const scrollingElem = document.getElementById('scrolling-text');
+                scrollingElem.textContent = songText;
+
+                setTimeout(() => {
+                    const containerWidth = document.getElementById('song').offsetWidth;
+                    const textWidth = scrollingElem.scrollWidth;
+
+                    if (textWidth > containerWidth) {
+                        scrollingElem.classList.add('scrolling');
+                    } else {
+                        scrollingElem.classList.remove('scrolling');
+                    }
+                }, 50);
+
+                const progress = (meta.duration > 0) 
+                    ? Math.min((meta.current / meta.duration) * 100, 100)
+                    : 0;
+
+                document.getElementById('bar').style.width = progress + '%';
+            } catch (err) {
+                console.error("Error while loading:", err);
+            }
+        }
+
+        setInterval(loadNowPlaying, 1000);
+        loadNowPlaying();
+    </script>
+</body>
+</html>

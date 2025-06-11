@@ -5,3 +5,5 @@
 Troubleshooting:
 1. AdBlock can block fetch, try disabling it
 2. Make sure you have python installed, and have flask and flask_cors in virtual environment or downloaded to computer
+
+Version 1 of SongFromYoutube WithBar - writes song and duration into file on disk
